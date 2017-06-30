@@ -15,11 +15,12 @@ module Staff
           }))
 
       @prior_authorization = @prescription.prior_authorizations.build(prior_authorization_params)
+      @prior_authorization.delay.perform
 
-      response = CoverMyMeds.default_client.create_request  RequestConfigurator.new(@prior_authorization).request
-      flash_message "Your prior authorization request was successfully started."
+      #response = CoverMyMeds.default_client.create_request  RequestConfigurator.new(@prior_authorization).request
+      #flash_message "Your prior authorization request was successfully started."
 
-      @prior_authorization.set_cmm_values(response)
+      #@prior_authorization.set_cmm_values(response)
 
       respond_to do |format|
         if @prior_authorization.save

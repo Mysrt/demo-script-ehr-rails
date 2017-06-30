@@ -1,3 +1,4 @@
+source 'https://gems.covermymeds.com'
 source 'https://rubygems.org'
 
 ruby '~> 2.2.2'
@@ -53,6 +54,10 @@ gem 'cocoon'
 
 gem 'dotenv-rails'
 gem 'ncpdp_epa'
+
+# Background Processing
+gem 'sidekiq', '~> 4'
+gem 'sidekiq-pro', source: 'https://cac27e4c:5ccafdaa@enterprise.contribsys.com/'
 
 group :development, :test do 
   # run with the thin web server

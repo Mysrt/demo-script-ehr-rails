@@ -39,10 +39,13 @@ class PriorAuthorizationsController < ApplicationController
     @prior_authorization = @prescription.prior_authorizations.build(prior_authorization_params)
 
     begin
-      response = CoverMyMeds.default_client.create_request(
-        RequestConfigurator.new(@prior_authorization).request
-      )
-      @prior_authorization.set_cmm_values(response)
+      send_to_ncpdp_ehr
+
+      @prior_authorization.delay
+      #response = CoverMyMeds.default_client.create_request(
+      #  RequestConfigurator.new(@prior_authorization).request
+      #)
+      #@prior_authorization.set_cmm_values(response)
       flash_message 'Your prior authorization request was successfully started.'
 
       respond_to do |format|

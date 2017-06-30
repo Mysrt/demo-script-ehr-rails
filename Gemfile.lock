@@ -5,7 +5,9 @@ GIT
     database_cleaner (1.5.3)
 
 GEM
+  remote: https://gems.covermymeds.com/
   remote: https://rubygems.org/
+  remote: https://cac27e4c:5ccafdaa@enterprise.contribsys.com/
   specs:
     actionmailer (4.2.7.1)
       actionpack (= 4.2.7.1)
@@ -84,6 +86,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
+    connection_pool (2.2.1)
     cover_my_meds (3.2.0)
       activesupport
       faraday (~> 0.11)
@@ -178,6 +181,8 @@ GEM
     public_suffix (2.0.5)
     puma (3.8.1)
     rack (1.6.5)
+    rack-protection (2.0.0)
+      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rack_session_access (0.1.1)
@@ -215,6 +220,7 @@ GEM
     rake (12.0.0)
     rb-readline (0.5.4)
     rdoc (4.3.0)
+    redis (3.3.3)
     rest-client (2.0.1)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
@@ -260,6 +266,13 @@ GEM
       websocket (~> 1.0)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
+    sidekiq (4.2.10)
+      concurrent-ruby (~> 1.0)
+      connection_pool (~> 2.2, >= 2.2.0)
+      rack-protection (>= 1.5.0)
+      redis (~> 3.2, >= 3.2.1)
+    sidekiq-pro (3.5.1)
+      sidekiq (>= 4.1.5)
     slop (3.6.0)
     spring (1.3.6)
     sprockets (3.7.1)
@@ -326,6 +339,8 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   selenium-webdriver (~> 2.0)
   shoulda-matchers
+  sidekiq (~> 4)
+  sidekiq-pro!
   spring (~> 1.3.6)
   uglifier (>= 1.3.0)
   webmock

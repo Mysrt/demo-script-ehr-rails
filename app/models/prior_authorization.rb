@@ -1,4 +1,6 @@
 class PriorAuthorization < ActiveRecord::Base
+  include Sidekiq::Worker
+
   belongs_to :prescription, inverse_of: :prior_authorizations
   belongs_to :patient, inverse_of: :prior_authorizations
   belongs_to :user, inverse_of: :prior_authorizations, foreign_key: :prescriber_id
@@ -34,6 +36,12 @@ class PriorAuthorization < ActiveRecord::Base
     sent_to_plan:         'Request',
     archived:             'Response'
   }.freeze
+
+
+  def perform
+    #this should be actually creating the script request eventually
+    #probably move this to a separate worker
+  end
 
   def last_updated
     updated_at.in_time_zone(Time.zone.name)
