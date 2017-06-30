@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '~> 2.2.6'
+ruby '~> 2.2.2'
 
 gem 'rails', '4.2.7.1'
 
@@ -52,6 +52,7 @@ gem 'bootstrap-kaminari-views'
 gem 'cocoon'
 
 gem 'dotenv-rails'
+gem 'ncpdp_epa'
 
 group :development, :test do 
   # run with the thin web server
@@ -60,8 +61,8 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 3.0'
-  gem 'capybara'
-  gem 'capybara-webkit'
+  #gem 'capybara'
+  #gem 'capybara-webkit'
   gem 'poltergeist'
   gem 'selenium-webdriver', '~> 2.0'
   gem 'rack_session_access'
