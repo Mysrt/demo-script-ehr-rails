@@ -1,9 +1,9 @@
 module Staff
-  class PaRequestsController < ApplicationController
+  class PriorAuthorizationsController < ApplicationController
     before_action :set_patient, only: [:create]
 
     def new
-      @pa_request = PaRequest.new 
+      @prior_authorization = PriorAuthorization.new 
       @prescription = Prescription.new
     end
 
@@ -14,15 +14,15 @@ module Staff
           pa_required: true,
           }))
 
-      @pa_request = @prescription.pa_requests.build(pa_request_params)
+      @prior_authorization = @prescription.prior_authorizations.build(prior_authorization_params)
 
-      response = CoverMyMeds.default_client.create_request  RequestConfigurator.new(@pa_request).request
+      response = CoverMyMeds.default_client.create_request  RequestConfigurator.new(@prior_authorization).request
       flash_message "Your prior authorization request was successfully started."
 
-      @pa_request.set_cmm_values(response)
+      @prior_authorization.set_cmm_values(response)
 
       respond_to do |format|
-        if @pa_request.save
+        if @prior_authorization.save
           format.html { redirect_to @patient }
         else
           format.html { render :new }
@@ -31,7 +31,7 @@ module Staff
     end
 
     def show
-      @pa_request = PaRequest.find(params[:id])
+      @prior_authorization = PriorAuthorization.find(params[:id])
     end
 
     private
@@ -45,8 +45,8 @@ module Staff
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def pa_request_params
-      params.require(:pa_request)
+    def prior_authorization_params
+      params.require(:prior_authorization)
             .permit(:prescriber_id,
                     :form_id, 
                     :urgent, 

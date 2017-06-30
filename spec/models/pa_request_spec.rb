@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PaRequest, type: :model do
+RSpec.describe PriorAuthorization, type: :model do
   fixtures :patients
   fixtures :prescriptions
   let(:patient) { Patient.find_by(first_name: 'Amber' ) }
@@ -18,16 +18,16 @@ RSpec.describe PaRequest, type: :model do
     }
   end
 
-  describe "creating a pa_request" do
+  describe "creating a prior_authorization" do
     context "when using valid values" do
       it 'is valid' do
-        pa_request = PaRequest.new(request_params)
-        expect(pa_request).to be_valid
+        prior_authorization = PriorAuthorization.new(request_params)
+        expect(prior_authorization).to be_valid
       end
 
       it 'will show in task list by default' do
-        pa_request = PaRequest.new(request_params)
-        expect(pa_request.display).to eq(true)
+        prior_authorization = PriorAuthorization.new(request_params)
+        expect(prior_authorization.display).to eq(true)
       end
     end
   end

@@ -2,9 +2,9 @@ class RequestConfigurator
 
     attr_reader :request
 
-    def initialize pa_request
+    def initialize prior_authorization
         @request = CoverMyMeds.default_client.request_data
-        @pa = pa_request
+        @pa = prior_authorization
 
         assign_request_metadata
         assign_patient

@@ -29,7 +29,7 @@ describe RequestPagesController, type: :controller do
       pharmacy_id:          pharmacy.id }
   end
   let(:prescription) { Prescription.create! prescription_attributes }
-  let(:pa_request_attributes) do
+  let(:prior_authorization_attributes) do
     { prescription_id: prescription.id,
       prescriber_id: 1,
       form_id: '123',
@@ -42,7 +42,7 @@ describe RequestPagesController, type: :controller do
       cmm_id: 'V2X6E3',
       cmm_workflow_status: 'New' }
   end
-  let(:pa_request) { PaRequest.create! pa_request_attributes }
+  let(:prior_authorization) { PriorAuthorization.create! prior_authorization_attributes }
 
   describe 'GET index' do
     context 'when using format json' do
@@ -53,7 +53,7 @@ describe RequestPagesController, type: :controller do
             actions: [
               {
                 href:    action_url,
-                ref:     'pa_request',
+                ref:     'prior_authorization',
                 method:  'PUT',
                 title:   'Save'
               }
@@ -63,8 +63,8 @@ describe RequestPagesController, type: :controller do
       end
       let(:client_params) do
         {
-          id:        pa_request.cmm_id,
-          token_id:  pa_request.cmm_token
+          id:        prior_authorization.cmm_id,
+          token_id:  prior_authorization.cmm_token
         }
       end
       let(:show_params) do
@@ -72,7 +72,7 @@ describe RequestPagesController, type: :controller do
           format:           'json',
           # patient_id:       patient.id,
           # prescription_id:  prescription.id,
-          id:    pa_request.id
+          id:    prior_authorization.id
         }
       end
       let(:request_pages_response) do
@@ -85,7 +85,7 @@ describe RequestPagesController, type: :controller do
       end
 
       before do
-        expect_any_instance_of(CoverMyMeds::Client).to receive(:get_request_page).with(pa_request.cmm_id, pa_request.cmm_token).and_return(Hashie::Mash.new(request_pages_response))
+        expect_any_instance_of(CoverMyMeds::Client).to receive(:get_request_page).with(prior_authorization.cmm_id, prior_authorization.cmm_token).and_return(Hashie::Mash.new(request_pages_response))
       end
 
       it 'hides the actions from the browser' do

@@ -2,7 +2,7 @@
   <h2><%= "#{@patient.description}" %></h2>
   <%= link_to 'Edit Patient', edit_patient_path(@patient), :class=>"btn btn-md btn-primary" %>
   <hr>
-  <h3>Prescriptions <div class='pull-right'><small>PA Requests: <%= @patient.pa_requests.count %></small></div></h3>
+  <h3>Prescriptions <div class='pull-right'><small>PA Requests: <%= @patient.prior_authorizations.count %></small></div></h3>
 
   <% if @patient.prescriptions.empty? %>
   <h5>No prescriptions have been added for this patient yet.</h5>

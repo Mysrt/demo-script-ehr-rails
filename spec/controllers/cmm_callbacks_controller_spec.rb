@@ -46,7 +46,7 @@ RSpec.describe CmmCallbacksController, type: :controller do
       let!(:user)       { User.find_by_npi(npi) }
       let(:do_request)  { post :create, valid_request, format: :json }
       let!(:prescription)    { Prescription.create! patient: patient, drug_number: '123456', quantity: 30, frequency: 'qD', refills: 2, dispense_as_written: true, drug_name: 'My Drug' }
-      let!(:pa_request) { PaRequest.create!(cmm_id: request_id, cmm_token: 'foo', prescription: prescription) }
+      let!(:prior_authorization) { PriorAuthorization.create!(cmm_id: request_id, cmm_token: 'foo', prescription: prescription) }
 
       context 'when a prescription exists' do
         before do
@@ -67,7 +67,7 @@ RSpec.describe CmmCallbacksController, type: :controller do
           expect(response.status).to eq(200)
         end
 
-        it 'updates a PaRequest and alerts the prescriber' do
+        it 'updates a PriorAuthorization and alerts the prescriber' do
           expect { do_request }.to change { user.reload.alerts.count }.from(0).to(1)
         end
       end

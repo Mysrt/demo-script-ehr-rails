@@ -1,8 +1,8 @@
-class PaRequest < ActiveRecord::Base
-  belongs_to :prescription, inverse_of: :pa_requests
-  belongs_to :patient, inverse_of: :pa_requests
-  belongs_to :user, inverse_of: :pa_requests, foreign_key: :prescriber_id
-  has_many :cmm_callbacks, inverse_of: :pa_request
+class PriorAuthorization < ActiveRecord::Base
+  belongs_to :prescription, inverse_of: :prior_authorizations
+  belongs_to :patient, inverse_of: :prior_authorizations
+  belongs_to :user, inverse_of: :prior_authorizations, foreign_key: :prescriber_id
+  has_many :cmm_callbacks, inverse_of: :prior_authorization
 
   validates_presence_of :prescription
 
@@ -25,7 +25,7 @@ class PaRequest < ActiveRecord::Base
   STATUS_MAP = {
     question_request:     'Request',
     question_response:    'Response',
-    pa_request:           'Request',
+    prior_authorization:           'Request',
     pa_response:          'Response',
     appeal_request:       'Request',
     appeal_response:      'Response',
@@ -115,17 +115,17 @@ class PaRequest < ActiveRecord::Base
   def self.for_status(status)
     case status.to_sym
     when :need_input
-      PaRequest.need_input
+      PriorAuthorization.need_input
     when :awaiting_response
-      PaRequest.awaiting_response
+      PriorAuthorization.awaiting_response
     when :determined
-      PaRequest.determined
+      PriorAuthorization.determined
     when :archived
-      PaRequest.archived
+      PriorAuthorization.archived
     when :all
-      PaRequest.all
+      PriorAuthorization.all
     else
-      PaRequest.need_input
+      PriorAuthorization.need_input
     end
   end
 

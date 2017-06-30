@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PaRequestsController, type: :controller do
+RSpec.describe PriorAuthorizationsController, type: :controller do
   let(:requests) {
     '{
       "requests": [

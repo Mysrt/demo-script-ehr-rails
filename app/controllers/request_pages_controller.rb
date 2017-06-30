@@ -7,10 +7,10 @@ class RequestPagesController < ApplicationController
 
   def index
     # get the request-page for our current request
-    @request_page_json = CoverMyMeds.default_client.get_request_page(@pa_request.cmm_id, @pa_request.cmm_token)
+    @request_page_json = CoverMyMeds.default_client.get_request_page(@prior_authorization.cmm_id, @prior_authorization.cmm_token)
 
     # redirect to my own controller for executing actions
-    mask_actions @request_page_json, @pa_request
+    mask_actions @request_page_json, @prior_authorization
 
     # make rendering easy
     @forms = @request_page_json[:forms]
@@ -27,7 +27,7 @@ class RequestPagesController < ApplicationController
     bad_request unless params[:button_title]
 
     # look up the action from our list of saved actions for this PA
-    actions = JSON.parse(@pa_request.request_pages_actions, symbolize_names: true)
+    actions = JSON.parse(@prior_authorization.request_pages_actions, symbolize_names: true)
     action = actions.select { |action| action[:title] == params[:button_title] }.first
 
     bad_request unless action
@@ -61,12 +61,12 @@ class RequestPagesController < ApplicationController
       @request_page_json = JSON.parse(response.body, symbolize_names: true)
       @request_page = @request_page_json[:request_page]
 
-      # if we got back a standard pa_request page, show that
-      if pa_request_form? @request_page
-        redirect_to pages_pa_request_path(@pa_request)
+      # if we got back a standard prior_authorization page, show that
+      if prior_authorization_form? @request_page
+        redirect_to pages_prior_authorization_path(@prior_authorization)
       else
         # otherwise, render the action
-        mask_actions @request_page, @pa_request
+        mask_actions @request_page, @prior_authorization
         @forms = @request_page[:forms]
         @data = @request_page[:data]
         @validations = @request_page[:validations]
@@ -77,15 +77,15 @@ class RequestPagesController < ApplicationController
 
     rescue CoverMyMeds::Error::HTTPError => e
       flash_message "API error retrieving the request page: #{e.message}:#{e.response}", :error
-      redirect_to pages_pa_request_path(@pa_request)
+      redirect_to pages_prior_authorization_path(@prior_authorization)
 
     rescue RestClient::Exception => e
       flash_message "Network error retrieving the request page: #{e.message}:#{e.response}", :error
-      redirect_to pages_pa_request_path(@pa_request)
+      redirect_to pages_prior_authorization_path(@prior_authorization)
 
     rescue StandardError => e
       flash_message "An unknown error occurred: #{e.message}", :error
-      redirect_to pages_pa_request_path(@pa_request)
+      redirect_to pages_prior_authorization_path(@prior_authorization)
     end
 
   end
@@ -96,38 +96,38 @@ class RequestPagesController < ApplicationController
     raise ActionController::BadRequest.new('Bad Request')
   end
 
-  def pa_request_form?(request_page)
-    request_page[:forms].has_key?(:pa_request)
+  def prior_authorization_form?(request_page)
+    request_page[:forms].has_key?(:prior_authorization)
   end
 
   # proxy actions through this controller, keeping tokens in the server
-  def mask_actions request_page, pa_request
+  def mask_actions request_page, prior_authorization
     # keep track of actions, so we can execute actions
     actions = request_page[:actions]
-    pa_request.update_attributes request_pages_actions: actions.to_json
+    prior_authorization.update_attributes request_pages_actions: actions.to_json
 
     # replace actions in json (don't send tokens to browser)
     actions.each do |action|
       action[:orig_href] = action[:href] # so we see it in the JSON source
       action[:orig_method] = action[:method]
-      action[:href] = action_pa_request_path(@pa_request, action[:title])
+      action[:href] = action_prior_authorization_path(@prior_authorization, action[:title])
       action[:method] = 'GET'
     end
   end
 
   # before actions to set up instance vars & do a redirect
   def set_request_pages
-    # pa_request is passed in with the URL
-    @pa_request = PaRequest.find(params[:id])
+    # prior_authorization is passed in with the URL
+    @prior_authorization = PriorAuthorization.find(params[:id])
 
     # patient & prescription are used for debugging mostly
-    @patient = @pa_request.prescription.patient
-    @prescription = @pa_request.prescription
+    @patient = @prior_authorization.prescription.patient
+    @prescription = @prior_authorization.prescription
   end
 
   def redirect_if_using_cmm
     return unless @_use_custom_ui == false
-    redirect_to @pa_request.cmm_link
+    redirect_to @prior_authorization.cmm_link
   end
 
 end

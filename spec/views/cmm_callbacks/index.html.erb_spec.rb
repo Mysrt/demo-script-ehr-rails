@@ -3,11 +3,11 @@ require 'rails_helper'
 RSpec.describe "cmm_callbacks/index", :type => :view do
   before(:each) do
     CmmCallback.create!(
-      :pa_request_id => 1,
+      :prior_authorization_id => 1,
       :content => '{"MyText":"myvalue"}'
     )
     CmmCallback.create!(
-      :pa_request_id => 1,
+      :prior_authorization_id => 1,
       :content => '{"MyText":"my other value"}'
     )
     assign(:callbacks, CmmCallback.all.page(1))

@@ -1,4 +1,4 @@
-<%= form_for @pa_request, url: staff_pa_requests_path(@pa_request) do |f| %>
+<%= form_for @prior_authorization, url: staff_prior_authorizations_path(@prior_authorization) do |f| %>
 <%= render 'shared/errors', object: f.object %>
 
 <div class='row'>
@@ -79,7 +79,7 @@
       <div class='form-group'>
         <%= label_tag :form_name, "Payer" %>
         <input type='text' id='form_name' class='form-control' placeholder='Payer Name'></input>
-        <%= hidden_field :pa_request, :form_id %>
+        <%= hidden_field :prior_authorization, :form_id %>
       </div>
     </formset>
   </div>

@@ -14,7 +14,7 @@ module RequestPagesHelper
   def show_question(form_name, question, data)
     # uncomment the below lines to hide questions
     # that are either statements, not required, or already answered
-    # form_name != 'pa_request' ||
+    # form_name != 'prior_authorization' ||
     #   ( question[:question_type] != 'STATEMENT' &&
     #     question[:flag] == 'REQUIRED' && 
     #     data[question[:question_id].underscore.to_sym].nil? ) ||
@@ -34,7 +34,7 @@ module RequestPagesHelper
   end
 
   def show_question_set(form_name, question_set, data)
-    form_name != 'pa_request' ||
+    form_name != 'prior_authorization' ||
       showable_questions?(form_name, question_set, data)
   end
 

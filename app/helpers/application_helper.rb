@@ -42,14 +42,14 @@ module ApplicationHelper
     }
   end
 
-  def pa_request_edit_link(request, title = 'View')
+  def prior_authorization_edit_link(request, title = 'View')
     if @_use_custom_ui
-      link_to title, pages_pa_request_path(request), id: 'edit_pa_request'
+      link_to title, pages_prior_authorization_path(request), id: 'edit_prior_authorization'
     else
-      link_to title, patient_prescription_pa_request_path(
+      link_to title, patient_prescription_prior_authorization_path(
         request.prescription.patient,
         request.prescription, request
-      ), id: 'edit_pa_request'
+      ), id: 'edit_prior_authorization'
     end
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170310202902) do
+ActiveRecord::Schema.define(version: 20170630173228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,28 +40,6 @@ ActiveRecord::Schema.define(version: 20170310202902) do
   end
 
   add_index "credentials", ["user_id"], name: "index_credentials_on_user_id", using: :btree
-
-  create_table "pa_requests", force: :cascade do |t|
-    t.integer  "prescription_id"
-    t.boolean  "urgent"
-    t.string   "form_id"
-    t.string   "state"
-    t.boolean  "sent"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "cmm_token"
-    t.string   "cmm_link"
-    t.string   "cmm_id"
-    t.string   "cmm_workflow_status"
-    t.text     "request_pages_actions"
-    t.string   "cmm_outcome"
-    t.integer  "prescriber_id"
-    t.string   "form_name",             default: "None Chosen"
-    t.boolean  "display",               default: true
-    t.boolean  "is_retrospective",      default: false
-  end
-
-  add_index "pa_requests", ["prescription_id"], name: "index_pa_requests_on_prescription_id", using: :btree
 
   create_table "patients", force: :cascade do |t|
     t.string   "first_name"
@@ -113,6 +91,28 @@ ActiveRecord::Schema.define(version: 20170310202902) do
 
   add_index "prescriptions", ["patient_id"], name: "index_prescriptions_on_patient_id", using: :btree
   add_index "prescriptions", ["pharmacy_id"], name: "index_prescriptions_on_pharmacy_id", using: :btree
+
+  create_table "prior_authorizations", force: :cascade do |t|
+    t.integer  "prescription_id"
+    t.boolean  "urgent"
+    t.string   "form_id"
+    t.string   "state"
+    t.boolean  "sent"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "cmm_token"
+    t.string   "cmm_link"
+    t.string   "cmm_id"
+    t.string   "cmm_workflow_status"
+    t.text     "request_pages_actions"
+    t.string   "cmm_outcome"
+    t.integer  "prescriber_id"
+    t.string   "form_name",             default: "None Chosen"
+    t.boolean  "display",               default: true
+    t.boolean  "is_retrospective",      default: false
+  end
+
+  add_index "prior_authorizations", ["prescription_id"], name: "index_prior_authorizations_on_prescription_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string "description", null: false

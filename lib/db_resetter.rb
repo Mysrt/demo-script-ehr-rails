@@ -2,7 +2,7 @@ class DbResetter
   def self.reset()
     ActiveRecord::Base.transaction do
       Patient.destroy_all
-      PaRequest.destroy_all
+      PriorAuthorization.destroy_all
       Role.destroy_all
       Prescription.destroy_all
       Pharmacy.destroy_all
@@ -106,12 +106,12 @@ class DbResetter
   end
 
   def self.create_pa(prescription)
-    pa_request = prescription.pa_requests.new(
+    prior_authorization = prescription.prior_authorizations.new(
       user: User.doctors.first,
       prescription: prescription,
       form_id: nil)
-    response = CoverMyMeds.default_client.create_request RequestConfigurator.new(pa_request).request
-    pa_request.set_cmm_values(response)
-    pa_request.save!
+    response = CoverMyMeds.default_client.create_request RequestConfigurator.new(prior_authorization).request
+    prior_authorization.set_cmm_values(response)
+    prior_authorization.save!
   end
 end

@@ -1,4 +1,4 @@
-module PaRequestsHelper
+module PriorAuthorizationsHelper
 
   LABEL_MAP = {
     not_needed:   'warning',

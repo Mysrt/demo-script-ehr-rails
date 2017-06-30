@@ -4,7 +4,7 @@ class HomeController < ApplicationController
 
   def home
     redirect_to patients_path and return if current_user && current_user.prescriber?
-    redirect_to pa_requests_path and return if current_user && !current_user.prescriber?
+    redirect_to prior_authorizations_path and return if current_user && !current_user.prescriber?
     redirect_to root_url
   end
 

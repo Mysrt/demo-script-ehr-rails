@@ -1,6 +1,6 @@
 class Patient < ActiveRecord::Base
   has_many :prescriptions, dependent: :destroy, inverse_of: :patient
-  has_many :pa_requests, through: :prescriptions, inverse_of: :patient
+  has_many :prior_authorizations, through: :prescriptions, inverse_of: :patient
 
   validates_presence_of :first_name, :last_name, :state
   validates :date_of_birth, presence: true, format: {
@@ -16,7 +16,7 @@ class Patient < ActiveRecord::Base
   end
 
   def requests
-    pa_requests.count
+    prior_authorizations.count
   end
 
   def to_patient_hash

@@ -1,15 +1,15 @@
 <!-- draw our own dashboard -->
 <div class='row'>
   <div class='col-md-2'>
-    <%= link_to "New Request", new_staff_pa_request_path, :class=>'btn btn-small btn-success' %>
+    <%= link_to "New Request", new_staff_prior_authorization_path, :class=>'btn btn-small btn-success' %>
   </div>
   <div class='col-md-10'>
     <ul class="nav nav-pills nav-justified">
-      <%= pill_link_to "Need Input >", pa_requests_path(status: :need_input) %>
-      <%= pill_link_to "Awaiting Response >", pa_requests_path(status: :awaiting_response) %>
-      <%= pill_link_to "Determined >", pa_requests_path(status: :determined) %>
-      <%= pill_link_to "Archived", pa_requests_path(status: :archived) %>
-      <%= pill_link_to "All", pa_requests_path(status: :all) %>
+      <%= pill_link_to "Need Input >", prior_authorizations_path(status: :need_input) %>
+      <%= pill_link_to "Awaiting Response >", prior_authorizations_path(status: :awaiting_response) %>
+      <%= pill_link_to "Determined >", prior_authorizations_path(status: :determined) %>
+      <%= pill_link_to "Archived", prior_authorizations_path(status: :archived) %>
+      <%= pill_link_to "All", prior_authorizations_path(status: :all) %>
     </ul>
   </div>
 </div>
@@ -38,7 +38,7 @@
         <tr class="request">
           <td>
             <%= retrospective_label(request) %>
-            <%= cmm_outcome_label(request) %> <%= pa_request_edit_link(request, request.cmm_id) %>
+            <%= cmm_outcome_label(request) %> <%= prior_authorization_edit_link(request, request.cmm_id) %>
           </td>
           <td>
             <%= link_to "#{request.prescription.patient.description}", request.prescription.patient, class: 'patient-link' %>
@@ -54,7 +54,7 @@
           </td>
           <td class="remove">
             <% unless request.display == false %>
-              <%= link_to patient_prescription_pa_request_path(request.prescription.patient, request.prescription, request), method: :delete, :class=>'btn btn-xs btn-danger' do %>
+              <%= link_to patient_prescription_prior_authorization_path(request.prescription.patient, request.prescription, request), method: :delete, :class=>'btn btn-xs btn-danger' do %>
                 <i class='glyphicon glyphicon-remove'></i>
               <% end %>
             <% end %>

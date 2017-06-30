@@ -67,9 +67,9 @@ class PrescriptionsController < ApplicationController
   # DELETE /patient/:patient_id/prescriptions/1
   def destroy
     # first, delete the PA request from our CMM dashboard
-    @prescription.pa_requests.each do |pa_request|
-      pa_request.remove_from_dashboard
-      flash_message("Request #{pa_request.cmm_id} removed from your dashboard.")
+    @prescription.prior_authorizations.each do |prior_authorization|
+      prior_authorization.remove_from_dashboard
+      flash_message("Request #{prior_authorization.cmm_id} removed from your dashboard.")
     end
 
     @prescription.destroy

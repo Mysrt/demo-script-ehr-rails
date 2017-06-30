@@ -108,7 +108,7 @@ RSpec.describe RequestConfigurator, type: :model do
     end
 
     let(:pa) do
-      PaRequest.create! request_params
+      PriorAuthorization.create! request_params
     end
 
     let(:request) do

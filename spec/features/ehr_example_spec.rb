@@ -7,7 +7,7 @@ describe 'eHR Example App' do
   let(:staff_login) { '/login/staff' }
   let(:staff) { 'Staff' }
   let(:doctor) { 'Dr. Alexander Fleming' }
-  let(:stubbed_pa_request) do
+  let(:stubbed_prior_authorization) do
     '{
     "requests": [
       {
@@ -143,7 +143,7 @@ describe 'eHR Example App' do
 
     it 'should navigate to the dashboard view', js: true do
       stub_request(:post, 'https://api.covermymeds.com/requests/search/?token_ids%5B%5D=random_token&v=1')
-        .to_return(status: 200, body: stubbed_pa_request, headers: {})
+        .to_return(status: 200, body: stubbed_prior_authorization, headers: {})
       click_link('Prior Authorizations')
       click_link('Task List')
       expect(page).to have_content('Your Prior Auth Dashboard')
@@ -204,7 +204,7 @@ describe 'eHR Example App' do
 
     it 'should navigate to the dashboard view from staff login', js: true do
       stub_request(:post, 'https://api.covermymeds.com/requests/search/?token_ids%5B%5D=random_token&v=1')
-        .to_return(status: 200, body: stubbed_pa_request, headers: {})
+        .to_return(status: 200, body: stubbed_prior_authorization, headers: {})
       visit '/logout'
       click_link 'Sign in...'
       click_link 'staff_login'
@@ -326,7 +326,7 @@ describe 'eHR Example App' do
 
     describe 'formulary service' do
       before do
-        stub_create_pa_request!
+        stub_create_prior_authorization!
         stub_indicators(full_drug_name, pa_required)
         fill_autocomplete 'prescription_drug_name',
                           with: drug_name, select: full_drug_name

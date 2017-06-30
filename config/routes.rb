@@ -17,15 +17,15 @@ Rails.application.routes.draw do
 
   resources :patients do
     resources :prescriptions do
-      resources :pa_requests
+      resources :prior_authorizations
     end
   end
 
   namespace :staff do
-    resources :pa_requests, only: [:new, :create, :show]
+    resources :prior_authorizations, only: [:new, :create, :show]
   end
 
-  resources :pa_requests do
+  resources :prior_authorizations do
     member do
       get 'pages', to: 'request_pages#index'
       post 'pages/:button_title',
@@ -35,13 +35,13 @@ Rails.application.routes.draw do
 
   resources :alerts
 
-  # post '/pa_requests/:pa_request_id/request_pages/:button_title',
+  # post '/prior_authorizations/:prior_authorization_id/request_pages/:button_title',
   #   to: 'request_pages#do_action',
-  #   as: :pa_request_request_pages_action
+  #   as: :prior_authorization_request_pages_action
 
   get '/toggle_ui', to: 'home#toggle_custom_ui'
 
-  get '/dashboard' => 'pa_requests#index'
+  get '/dashboard' => 'prior_authorizations#index'
 
   get '/help' => 'home#help'
 

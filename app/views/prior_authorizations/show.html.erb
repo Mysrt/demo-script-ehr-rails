@@ -34,22 +34,22 @@
 <h2>Request</h2>
 <p>
   <strong>Form Id</strong>
-  <%= @pa_request.form_id %>
+  <%= @prior_authorization.form_id %>
 </p>
 
 <p><strong>Sent?</strong>
-<%= @pa_request.sent %>
+<%= @prior_authorization.sent %>
 </p>
 
 <p>
   <strong>Urgent?</strong>
-  <%= @pa_request.urgent %>
+  <%= @prior_authorization.urgent %>
 </p>
 
 <p>
   <strong>State</strong>
-  <%= @pa_request.state %>
+  <%= @prior_authorization.state %>
 </p>
 
-<%= link_to 'View Details', cmm_request_link_for(@pa_request), :class=>'btn btn-success' %>
+<%= link_to 'View Details', cmm_request_link_for(@prior_authorization), :class=>'btn btn-success' %>
 <%= link_to 'Back', :back %>
