@@ -318,6 +318,7 @@ DEPENDENCIES
   cover_my_meds (>= 1.0)
   database_cleaner!
   dotenv-rails
+  faraday
   jbuilder (~> 2.0)
   jquery-rails
   jquery-ui-rails

@@ -2,7 +2,6 @@ class PriorAuthorizationsController < ApplicationController
   before_action :set_request, only: [:show, :edit, :update, :destroy]
   before_action :set_prescription, only: [:new, :create]
 
-  # GET /requests
   def index
     if params[:status].nil?
       redirect_to prior_authorizations_path(status: :need_input)
@@ -16,31 +15,26 @@ class PriorAuthorizationsController < ApplicationController
     logger.info "Exception updating requests: #{e.message}"
   end
 
-  # GET /patients/1/prescriptions/1/prior_authorizations/1
   def show
     respond_to do |format|
       format.html { redirect_to pa_display_page(@prior_authorization) }
     end
   end
 
-  # GET /patients/1/prescriptions/1/prior_authorizations/new
   def new
     @prior_authorization = @prescription.prior_authorizations.new 
   end
 
-  # GET /patients/1/prescriptions/1/prior_authorizations/1/edit
   def edit
     # instance variables set by set_request already
     redirect_to { [@patient, @prescription, @prior_authorization] }
   end
 
-  # POST /patients/1/prescriptions/1/prior_authorizations
   def create
-    @prior_authorization = @prescription.prior_authorizations.build(prior_authorization_params)
+    binding.pry
+    @prior_authorization = @prescription.prior_authorizations.create!(prior_authorization_params)
 
     begin
-      send_to_ncpdp_ehr
-
       @prior_authorization.delay
       #response = CoverMyMeds.default_client.create_request(
       #  RequestConfigurator.new(@prior_authorization).request
@@ -63,7 +57,6 @@ class PriorAuthorizationsController < ApplicationController
 
   end
 
-  # DELETE /prior_authorization/:prior_authorization_id/prior_authorizations/1
   def destroy
     @prior_authorization.remove_from_dashboard
     flash_message('Request successfully removed.')

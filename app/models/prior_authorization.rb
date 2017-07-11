@@ -1,9 +1,11 @@
 class PriorAuthorization < ActiveRecord::Base
   include Sidekiq::Worker
 
-  belongs_to :prescription, inverse_of: :prior_authorizations
-  belongs_to :patient, inverse_of: :prior_authorizations
+  belongs_to :prescription
+  belongs_to :prescriber, class_name: 'User'
   belongs_to :user, inverse_of: :prior_authorizations, foreign_key: :prescriber_id
+
+  has_one :patient, through: :prescription
   has_many :cmm_callbacks, inverse_of: :prior_authorization
 
   validates_presence_of :prescription
@@ -27,7 +29,7 @@ class PriorAuthorization < ActiveRecord::Base
   STATUS_MAP = {
     question_request:     'Request',
     question_response:    'Response',
-    prior_authorization:           'Request',
+    prior_authorization:  'Request',
     pa_response:          'Response',
     appeal_request:       'Request',
     appeal_response:      'Response',
@@ -39,8 +41,9 @@ class PriorAuthorization < ActiveRecord::Base
 
 
   def perform
-    #this should be actually creating the script request eventually
-    #probably move this to a separate worker
+    xml = XMLSerializer::InitiationRequest.new(self).serialize!
+
+    NcpdpEHRService.new.post(xml)
   end
 
   def last_updated

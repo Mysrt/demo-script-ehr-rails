@@ -52,6 +52,7 @@ gem 'bootstrap-kaminari-views'
 # for nested forms
 gem 'cocoon'
 
+gem 'faraday'
 gem 'dotenv-rails'
 gem 'ncpdp_epa'
 
