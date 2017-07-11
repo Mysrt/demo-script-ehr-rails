@@ -31,7 +31,6 @@ class PriorAuthorizationsController < ApplicationController
   end
 
   def create
-    binding.pry
     @prior_authorization = @prescription.prior_authorizations.create!(prior_authorization_params)
 
     begin
